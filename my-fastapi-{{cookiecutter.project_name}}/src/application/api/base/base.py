@@ -3,7 +3,6 @@
 # ----------------------------------------------------------------------------------
 from application.api.actions import Actions
 
-
 PREFIX = ""
 
 

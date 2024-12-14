@@ -15,7 +15,45 @@ dishka = "^1.4.2"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.30.0"
+ruff = "^0.8.3"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+lint.select = [
+    "F",  # Pyflakes
+    "E",  # PEP8 errors
+    "W",  # PEP8 warnings
+    "C",  # Cyclomatic complexity
+    "I",  # Import conventions
+    "B",  # Buggyness (e.g., flake8-bugbear)
+    "Q",  # Flake8-Quotes
+    "S",  # Security (e.g., Bandit)
+]
+
+lint.ignore = [
+    "E501",  # Line length (handled by Black)
+]
+
+line-length = 88
+
+[tool.ruff.lint.flake8-quotes]
+multiline-quotes = "double"
+inline-quotes = "double"
+avoid-escape = true
+
+
+[tool.ruff.lint.isort]
+lines-between-types = 2
+lines-after-imports = 1
+
+section-order = ["future", "standard-library", "first-party", "third-party", "local-folder"]
+known-local-folder = ["src"]
+
+detect-same-package = true
+force-single-line = false
+order-by-type = true
+length-sort = true
+no-sections = false

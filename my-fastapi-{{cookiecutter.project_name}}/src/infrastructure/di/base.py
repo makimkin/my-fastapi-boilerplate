@@ -1,10 +1,9 @@
 # endregion-------------------------------------------------------------------------
 # region BASE DI PROVIDER
 # ----------------------------------------------------------------------------------
-from dishka import provide, Provider, Scope
-
 from settings.config import Config
 
+from dishka import Scope, Provider, provide
 
 class DIProviderBase(Provider):
     @provide(scope=Scope.APP)

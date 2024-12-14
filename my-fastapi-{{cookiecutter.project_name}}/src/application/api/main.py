@@ -1,17 +1,15 @@
 # endregion-------------------------------------------------------------------------
 # region MAIN
 # ----------------------------------------------------------------------------------
-from dishka.integrations.fastapi import setup_dishka
-from dishka import make_async_container
-
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
 
 from infrastructure.di.app import DIProviderApp
-
+from application.api.lifespan import on_startup, on_shutdown
 from application.api.base.router import router as base_router
-from application.api.lifespan import on_shutdown, on_startup
 
+from dishka import make_async_container
+from fastapi import FastAPI
+from dishka.integrations.fastapi import setup_dishka
 
 @asynccontextmanager
 async def lifespan_manager(app: FastAPI):

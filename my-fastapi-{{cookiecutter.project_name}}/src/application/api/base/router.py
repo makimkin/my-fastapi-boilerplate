@@ -1,16 +1,14 @@
 # endregion-------------------------------------------------------------------------
 # region MESSAGE HANDLERS
 # ----------------------------------------------------------------------------------
-from dishka.integrations.fastapi import DishkaRoute, FromDishka
-
-from fastapi.routing import APIRouter
-from fastapi import status
-
+from settings.config import Config
 from application.api.schemas import ErrorSchema
 
-from settings.config import Config
+from fastapi import status
+from fastapi.routing import APIRouter
+from dishka.integrations.fastapi import FromDishka, DishkaRoute
 
-from .base import BASE_ACTIONS, PREFIX
+from .base import PREFIX, BASE_ACTIONS
 from .schemas import BaseHealthCheckResponse
 
 router = APIRouter(prefix=PREFIX, route_class=DishkaRoute)
@@ -26,7 +24,7 @@ async def base_health_check(config: FromDishka[Config]) -> dict:
     """-----------------------------------------------------------------------------
     The Base Healthcheck Handler.
     -----------------------------------------------------------------------------"""
-    return dict(di="✅" if config is not None else "❌")
+    return {"di": "✅" if config is not None else "❌"}
 
 
 # endregion-------------------------------------------------------------------------

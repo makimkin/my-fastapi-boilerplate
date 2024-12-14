@@ -3,7 +3,6 @@
 # ----------------------------------------------------------------------------------
 from enum import Enum
 
-
 class Actions(str, Enum):
     def __str__(self) -> str:
         return self.value

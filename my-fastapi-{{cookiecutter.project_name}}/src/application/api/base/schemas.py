@@ -1,12 +1,11 @@
 # endregion-------------------------------------------------------------------------
 # region BASE SCHEMAS
 # ----------------------------------------------------------------------------------
-from pydantic import Field
-
 from typing import Annotated
 
 from application.api.schemas import ParentSchema
 
+from pydantic import Field
 
 # endregion-------------------------------------------------------------------------
 # region HEALTHCHECK

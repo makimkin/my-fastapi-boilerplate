@@ -1,10 +1,9 @@
 # endregion-------------------------------------------------------------------------
 # region APPLICATION SCHEMAS
 # ----------------------------------------------------------------------------------
-from pydantic import BaseModel, ConfigDict, Field
-
 from typing import Annotated
 
+from pydantic import Field, BaseModel, ConfigDict
 
 class ParentSchema(BaseModel):
     """-----------------------------------------------------------------------------

@@ -3,7 +3,6 @@
 # ----------------------------------------------------------------------------------
 from .base import DIProviderBase
 
-
 class DIProviderMock(DIProviderBase): ...
 
 
