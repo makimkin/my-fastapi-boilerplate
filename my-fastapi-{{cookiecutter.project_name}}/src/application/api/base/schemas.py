@@ -12,7 +12,7 @@ from application.api.schemas import ParentSchema
 # region HEALTHCHECK
 # ----------------------------------------------------------------------------------
 class BaseHealthCheckResponse(ParentSchema):
-    message: Annotated[str, Field()]
+    di: Annotated[str, Field(alias="di")]
 
 
 # endregion-------------------------------------------------------------------------
