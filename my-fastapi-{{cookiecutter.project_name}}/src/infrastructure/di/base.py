@@ -1,15 +1,15 @@
 # endregion-------------------------------------------------------------------------
-# region CONFIG
+# region BASE DI PROVIDER
 # ----------------------------------------------------------------------------------
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from dishka import provide, Provider, Scope
+
+from settings.config import Config
 
 
-class Config(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8",
-        extra="ignore",
-    )
+class DIProviderBase(Provider):
+    @provide(scope=Scope.APP)
+    def get_config(self) -> Config:
+        return Config()
 
 
 # endregion-------------------------------------------------------------------------
