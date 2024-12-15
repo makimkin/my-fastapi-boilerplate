@@ -13,6 +13,7 @@ fastapi = {extras = ["standard"], version = "^0.115.6"}
 uvicorn = {extras = ["standard"], version = "^0.33.0"}
 pydantic = "^2.10.3"
 dishka = "^1.4.2"
+typer = "^0.15.1"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.30.0"
