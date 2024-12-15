@@ -5,3 +5,6 @@ __pycache__
 # ENV
 .env*
 !.env.sample
+
+# ZED
+.zed
