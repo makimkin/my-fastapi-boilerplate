@@ -11,7 +11,7 @@ ENV PYTHONDONTWRITEBYTECODE 1 && \
 
 RUN apt update -y
 
-RUN addgroup --system app_group && \ 
+RUN addgroup --system app_group && \
     adduser --system --ingroup app_group app_user
 
 WORKDIR /src

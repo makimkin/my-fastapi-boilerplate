@@ -11,6 +11,8 @@ install:
     python3.13 -m venv .venv
     . .venv/bin/activate
     poetry install
+    pre-commit install
+    pre-commit autoupdate --repo https://github.com/charliermarsh/ruff-pre-commit --repo https://github.com/pre-commit/pre-commit-hooks
 
 up args="":
   {{dc}} {{file_docker}} {{profile_api}} up --build --remove-orphans {{args}}
