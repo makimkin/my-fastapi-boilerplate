@@ -1,7 +1,7 @@
 # Project Checklist
 
 - [ X ] console via typer
-- [ ] mypy
+- [ X ] mypy
 - [ ] logger
 - [ ] exceptions
 - [ ] repositories
