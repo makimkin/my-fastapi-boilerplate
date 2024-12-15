@@ -8,6 +8,7 @@ repos:
       - id: check-added-large-files
       - id: check-json
       - id: check-toml
+      - id: pretty-format-json
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.8.3 # Use the latest stable version
