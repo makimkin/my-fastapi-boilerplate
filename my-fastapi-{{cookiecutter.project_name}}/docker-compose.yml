@@ -1,7 +1,7 @@
 services:
   app:
-    hostname: app_app
-    container_name: app_app
+    hostname: app
+    container_name: app
     profiles:
       - api
     build:
