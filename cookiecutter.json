@@ -2,5 +2,8 @@
   "project_name": "project",
   "app_name": "app",
   "author_name": "max",
-  "author_email": "akimmax@gmail.com"
+  "author_email": "akimmax@gmail.com",
+  "_copy_without_render": [
+    "justfile"
+  ]
 }
