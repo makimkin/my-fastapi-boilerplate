@@ -1,9 +1,8 @@
-
 # Project Checklist
 
-- [ ] console via typer
-- [ ] logger
+- [ X ] console via typer
 - [ ] mypy
+- [ ] logger
 - [ ] exceptions
 - [ ] repositories
-- [ ] updated README.md
+- [ ] update README.md
