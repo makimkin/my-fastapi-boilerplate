@@ -12,14 +12,14 @@ async def on_startup() -> None:
     """-----------------------------------------------------------------------------
     Callback to run on application startup.
     -----------------------------------------------------------------------------"""
-    logger.info("STARTUP:\tBase Broker is Connected")
+    logger.info("STARTUP")
 
 
 async def on_shutdown(app: FastAPI) -> None:
     """-----------------------------------------------------------------------------
     Callback to run on application shutdown.
     -----------------------------------------------------------------------------"""
-    logger.info("SHUTDOWN:\tBase Broker is Closed")
+    logger.info("SHUTDOWN")
 
     await app.state.dishka_container.close()
 

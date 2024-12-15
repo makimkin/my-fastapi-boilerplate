@@ -1,7 +1,7 @@
 services:
   app:
-    hostname: app
-    container_name: app
+    hostname: {{cookiecutter.app_name|lower|replace(' ', '_')}}_app
+    container_name: {{cookiecutter.app_name|lower|replace(' ', '_')}}_app
     profiles:
       - api
     build:
@@ -27,5 +27,5 @@ services:
 
 networks:
   app:
-    name: app
+    name: {{cookiecutter.app_name|lower|replace(' ', '_')}}_app
     driver: bridge
