@@ -1,6 +1,9 @@
 # endregion-------------------------------------------------------------------------
 # region CONFIG
 # ----------------------------------------------------------------------------------
+from typing import Annotated
+
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Config(BaseSettings):
@@ -9,6 +12,8 @@ class Config(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
     )
+
+    APP_PORT:  Annotated[int, Field(alias="APP_PORT")]= 8000
 
 
 # endregion-------------------------------------------------------------------------
