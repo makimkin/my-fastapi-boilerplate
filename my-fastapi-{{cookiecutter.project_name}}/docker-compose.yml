@@ -23,9 +23,9 @@ services:
     volumes:
       - ./src:/src
     networks:
-      - backend
+      - app
 
 networks:
-  backend:
-    name: app_backend
+  app:
+    name: app
     driver: bridge
