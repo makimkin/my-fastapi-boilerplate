@@ -1,0 +1,25 @@
+dc := "docker compose"
+
+file_docker := "-f docker-compose.yml"
+
+profile_api := "--profile api"
+
+container_app := "app"
+
+install:
+    rm -rf .venv
+    python3.13 -m venv .venv
+    . .venv/bin/activate
+    poetry install
+
+up args="":
+  {{dc}} {{file_docker}} {{profile_api}} up --build --remove-orphans {{args}}
+
+down args="":
+  {{dc}} {{file_docker}} {{profile_api}} down {{args}}
+
+app-restart args="":
+  docker restart {{container_app}} {{args}}
+
+app-logs args="":
+  docker logs {{container_app}} {{args}}
