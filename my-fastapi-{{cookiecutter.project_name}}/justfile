@@ -4,7 +4,7 @@ file_docker := "-f docker-compose.yml"
 
 profile_api := "--profile api"
 
-container_app := "{{cookiecutter.app_name|lower|replace(' ', '_')}}_app"
+container_app := "abcde123_app"
 
 install:
     rm -rf .venv

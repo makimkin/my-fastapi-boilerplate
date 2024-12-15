@@ -22,7 +22,7 @@ async def lifespan_manager(app: FastAPI):
 
 def create_app_base() -> FastAPI:
     app = FastAPI(
-        title="{{cookiecutter.app_name}} API",
+        title="{{cookiecutter.app_name.upper()}} API",
         lifespan=lifespan_manager,
         description="API for {{cookiecutter.app_name}}",
         version="0.1.0",
