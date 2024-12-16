@@ -5,8 +5,10 @@ import logging
 
 from contextlib import asynccontextmanager
 
+from application.api.exception_handlers import base_exception_handler
 from application.api.base.router import router as base_router
 from application.api.lifespan import on_startup, on_shutdown
+from application.exceptions import BaseApplicationException
 
 from infrastructure.di.app import DIProviderApp
 
@@ -36,9 +38,9 @@ def create_app_base() -> FastAPI:
         description="API for {{cookiecutter.app_name}}",
         version="0.1.0",
     )
-    logger.info("App created")
-
     app.include_router(base_router)
+
+    app.exception_handlers[BaseApplicationException] = base_exception_handler
 
     return app
 
@@ -48,8 +50,6 @@ def create_app() -> FastAPI:
 
     container = make_async_container(DIProviderApp())
     setup_dishka(container=container, app=app)
-    logger.info("DI container set up")
-
     setup_logger(default_level=logging.INFO)
 
     return app

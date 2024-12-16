@@ -1,8 +1,6 @@
 # endregion-------------------------------------------------------------------------
 # region APPLICATION CONSOLE
 # ----------------------------------------------------------------------------------
-import logging
-
 from settings.config import Config
 
 import httpx
@@ -10,8 +8,6 @@ import typer
 import uvicorn
 
 console = typer.Typer()
-
-logger = logging.getLogger(__name__)
 
 
 # endregion-------------------------------------------------------------------------

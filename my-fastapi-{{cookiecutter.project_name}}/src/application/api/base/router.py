@@ -1,11 +1,13 @@
 # endregion-------------------------------------------------------------------------
 # region MESSAGE HANDLERS
 # ----------------------------------------------------------------------------------
-from settings.config import Config
 from application.api.schemas import ErrorSchema
 
-from fastapi import status
+from settings.config import Config
+
 from fastapi.routing import APIRouter
+from fastapi import status
+
 from dishka.integrations.fastapi import FromDishka, DishkaRoute
 
 from .base import PREFIX, BASE_ACTIONS

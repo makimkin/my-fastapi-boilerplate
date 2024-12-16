@@ -4,8 +4,8 @@
 from dataclasses import dataclass
 
 
-@dataclass(eq=False)
-class BaseApplicationException(Exception, metaclass=type):
+@dataclass(frozen=True)
+class BaseApplicationException(Exception):
     @property
     def message(self):
         return "Application error occured"
