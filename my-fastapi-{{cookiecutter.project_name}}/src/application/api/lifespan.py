@@ -5,7 +5,7 @@ import logging
 
 from fastapi import FastAPI
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("app")
 
 
 async def on_startup() -> None:
