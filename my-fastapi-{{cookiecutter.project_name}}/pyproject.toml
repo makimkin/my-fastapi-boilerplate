@@ -31,7 +31,6 @@ lint.select = [
     "E",  # PEP8 errors
     "W",  # PEP8 warnings
     "C",  # Cyclomatic complexity
-    "I",  # Import conventions
     "B",  # Buggyness (e.g., flake8-bugbear)
     "Q",  # Flake8-Quotes
     "S",  # Security (e.g., Bandit)
@@ -47,17 +46,3 @@ line-length = 88
 multiline-quotes = "double"
 inline-quotes = "double"
 avoid-escape = true
-
-
-[tool.ruff.lint.isort]
-lines-between-types = 2
-lines-after-imports = 1
-
-section-order = ["future", "standard-library", "first-party", "third-party", "local-folder"]
-known-local-folder = ["src"]
-
-detect-same-package = true
-force-single-line = false
-order-by-type = true
-length-sort = true
-no-sections = false
