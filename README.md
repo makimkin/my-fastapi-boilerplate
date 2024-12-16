@@ -3,7 +3,7 @@
 - [x] console via typer
 - [x] mypy
 - [x] logger
-- [ ] exceptions
+- [x] exceptions
 - [ ] repositories
 - [ ] git actions
 - [ ] update readme.md
