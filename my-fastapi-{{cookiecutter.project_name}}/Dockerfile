@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.12.1
+ARG PYTHON_VERSION=3.12.8
 ARG APP_ENV=development
 
 # ------------------------------------------------------------------------------
