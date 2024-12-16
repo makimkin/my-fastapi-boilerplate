@@ -1,5 +1,6 @@
 {
   "project_name": "project",
+  "project_description": "project description",
   "app_name": "app",
   "author_name": "max",
   "author_email": "akimmax@gmail.com",
