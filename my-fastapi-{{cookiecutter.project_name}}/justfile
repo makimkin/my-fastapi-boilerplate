@@ -4,7 +4,7 @@ file_docker := "-f docker-compose.yml"
 
 profile_api := "--profile api"
 
-container_app := "abcde123_app"
+container_app := "{{cookiecutter.app_name.lower()}}_app"
 
 
 default:

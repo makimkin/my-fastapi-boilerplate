@@ -1,7 +1,7 @@
 services:
   app:
-    hostname: abcde123_app
-    container_name: abcde123_app
+    hostname: {{cookiecutter.app_name.lower()}}_app
+    container_name: {{cookiecutter.app_name.lower()}}_app
     profiles:
       - api
     build:
@@ -27,5 +27,5 @@ services:
 
 networks:
   app:
-    name: abcde123_app
+    name: {{cookiecutter.app_name.lower()}}_app
     driver: bridge
