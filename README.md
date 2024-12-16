@@ -1,7 +1,7 @@
 # FastAPI Boilerplate (DDD)
 
-![FastAPI](https://img.shields.io/badge/FastAPI-0.95+-green)
-![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-A888B5)
+![Python](https://img.shields.io/badge/Python-3.12+-8174A0)
 [![License](https://img.shields.io/github/license/makimkin/my-fastapi-boilerplate)](https://github.com/makimkin/my-fastapi-boilerplate/blob/main/LICENSE)
 
 A modern FastAPI boilerplate structured around **Domain-Driven Design (DDD)** principles. This project provides a foundation for building scalable, maintainable, and testable web APIs.
