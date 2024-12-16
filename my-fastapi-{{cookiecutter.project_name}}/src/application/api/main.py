@@ -40,15 +40,15 @@ def create_app_base() -> FastAPI:
 
     app.include_router(base_router)
 
-    container = make_async_container(DIProviderApp())
-    setup_dishka(container=container, app=app)
-    logger.info("DI container set up")
-
     return app
 
 
 def create_app() -> FastAPI:
     app = create_app_base()
+
+    container = make_async_container(DIProviderApp())
+    setup_dishka(container=container, app=app)
+    logger.info("DI container set up")
 
     setup_logger(default_level=logging.INFO)
 
