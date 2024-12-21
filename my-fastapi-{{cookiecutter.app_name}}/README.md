@@ -1,9 +1,5 @@
 # {{cookiecutter.app_name.upper()}}
 
-## Overview
-
-{{cookiecutter.project_description}}
-
 ---
 
 ## Installation
