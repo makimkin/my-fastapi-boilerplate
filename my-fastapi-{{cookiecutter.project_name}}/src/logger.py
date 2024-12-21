@@ -2,7 +2,7 @@
 # region LOGGING HANDLER
 # ----------------------------------------------------------------------------------
 import logging.config
-import yaml  # type: ignore[import]
+import yaml
 import sys
 import os
 
