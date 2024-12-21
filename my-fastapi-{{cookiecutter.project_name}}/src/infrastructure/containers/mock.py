@@ -1,9 +1,10 @@
 # endregion-------------------------------------------------------------------------
-# region MOCK DI PROVIDER
+# region CONTAINER MOCK
 # ----------------------------------------------------------------------------------
-from .base import DIProviderBase
+from .base import ContainerBase
 
-class DIProviderMock(DIProviderBase): ...
+
+class ContainerMock(ContainerBase): ...
 
 
 # endregion-------------------------------------------------------------------------

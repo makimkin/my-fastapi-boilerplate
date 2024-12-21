@@ -1,9 +1,10 @@
 # endregion-------------------------------------------------------------------------
-# region APP DI PROVIDER
+# region CONTAINER APP
 # ----------------------------------------------------------------------------------
-from .base import DIProviderBase
+from .base import ContainerBase
 
-class DIProviderApp(DIProviderBase): ...
+
+class ContainerApp(ContainerBase): ...
 
 
 # endregion-------------------------------------------------------------------------

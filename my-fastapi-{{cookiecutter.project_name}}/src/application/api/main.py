@@ -10,7 +10,7 @@ from application.api.base.router import router as base_router
 from application.api.lifespan import on_startup, on_shutdown
 from application.exceptions import BaseApplicationException
 
-from infrastructure.di.app import DIProviderApp
+from infrastructure.containers.app import ContainerApp
 
 from logger import setup_logger
 
@@ -48,11 +48,15 @@ def create_app_base() -> FastAPI:
 def create_app() -> FastAPI:
     app = create_app_base()
 
-    container = make_async_container(DIProviderApp())
+    container = make_async_container(ContainerApp())
     setup_dishka(container=container, app=app)
     setup_logger(default_level=logging.INFO)
 
     return app
+
+
+def create_app_mock() -> FastAPI:
+    return create_app_base()
 
 
 # endregion-------------------------------------------------------------------------
