@@ -18,7 +18,7 @@ def check_health():
     config = Config()
 
     with httpx.Client() as client:
-        response = client.get(f"http://0.0.0.0:{config.APP_PORT}/check/health")
+        response = client.get(f"http://0.0.0.0:{config.APP_PORT}/v1/check/health")
         response.raise_for_status()
 
 
@@ -29,7 +29,7 @@ def check_health():
 def run():
     config = Config()
     uvicorn.run(
-        "application.api.main:create_app",
+        "presentation.api.main:create_app",
         reload=True,
         factory=True,
         host="0.0.0.0",  # noqa: S104

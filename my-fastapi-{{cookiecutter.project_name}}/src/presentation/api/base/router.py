@@ -1,8 +1,6 @@
 # endregion-------------------------------------------------------------------------
-# region MESSAGE HANDLERS
+# region BASE HANDLERS
 # ----------------------------------------------------------------------------------
-from application.api.schemas import ErrorSchema
-
 from settings.config import Config
 
 from fastapi.routing import APIRouter
@@ -18,13 +16,12 @@ router = APIRouter(prefix=PREFIX, route_class=DishkaRoute)
 
 @router.get(
     BASE_ACTIONS.HEALTHCHECK,
+    status_code=status.HTTP_200_OK,
     response_model=BaseHealthCheckResponse,
-    status_code=status.HTTP_201_CREATED,
-    responses={status.HTTP_400_BAD_REQUEST: {"model": ErrorSchema}},
 )
 async def base_health_check(config: FromDishka[Config]) -> dict:
     """-----------------------------------------------------------------------------
-    The Base Healthcheck Handler.
+    The Base Health Check Handler.
     -----------------------------------------------------------------------------"""
     return {"di": "✅" if config is not None else "❌"}
 

@@ -5,10 +5,11 @@ import logging
 
 from contextlib import asynccontextmanager
 
-from application.api.exception_handlers import base_exception_handler
-from application.api.base.router import router as base_router
-from application.api.lifespan import on_startup, on_shutdown
-from application.exceptions import BaseApplicationException
+from .exception_handlers import base_exception_handler
+from .lifespan import on_startup, on_shutdown
+from .base import base_router
+
+from domain.common.exceptions import ExceptionBase
 
 from infrastructure.containers.app import ContainerApp
 
@@ -17,14 +18,17 @@ from logger import setup_logger
 from dishka.integrations.fastapi import setup_dishka
 from dishka import make_async_container
 
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 
 logger = logging.getLogger("app")
 
 
+router_v1 = APIRouter(prefix="/v1")
+
+
 @asynccontextmanager
 async def lifespan_manager(app: FastAPI):
-    await on_startup()
+    await on_startup(app)
 
     yield
 
@@ -33,14 +37,17 @@ async def lifespan_manager(app: FastAPI):
 
 def create_app_base() -> FastAPI:
     app = FastAPI(
-        title="{{cookiecutter.app_name.upper()}} API",
+        title="KOT API",
         lifespan=lifespan_manager,
-        description="API for {{cookiecutter.app_name}}",
+        description="API for kot",
         version="0.1.0",
     )
-    app.include_router(base_router)
 
-    app.exception_handlers[BaseApplicationException] = base_exception_handler
+    router_v1.include_router(base_router)
+
+    app.include_router(router_v1)
+
+    app.exception_handlers[ExceptionBase] = base_exception_handler
 
     return app
 

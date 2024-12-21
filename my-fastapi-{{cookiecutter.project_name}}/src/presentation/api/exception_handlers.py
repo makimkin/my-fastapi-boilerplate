@@ -3,15 +3,15 @@
 # ----------------------------------------------------------------------------------
 import logging
 
-from application.exceptions import BaseApplicationException
+from domain.common.exceptions import ExceptionBase
 
 from fastapi import Request, HTTPException, status
 
 logger = logging.getLogger("app")
 
 
-def base_exception_handler(_: Request, e: BaseApplicationException):
-    logger.exception(e)
+def base_exception_handler(_: Request, e: ExceptionBase):
+    logger.error(e.message, exc_info=e)
     raise HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST,
         detail={

@@ -5,9 +5,10 @@ from typing import Annotated
 
 from pydantic import Field, BaseModel, ConfigDict
 
-class ParentSchema(BaseModel):
+
+class APISchema(BaseModel):
     """-----------------------------------------------------------------------------
-    The Parent Schema with custom configuration.
+    The API Schema with custom configuration.
     -----------------------------------------------------------------------------"""
 
     model_config = ConfigDict(
@@ -17,7 +18,7 @@ class ParentSchema(BaseModel):
     )
 
 
-class ErrorSchemaDetail(ParentSchema):
+class ErrorSchemaDetail(APISchema):
     """-----------------------------------------------------------------------------
     The Error Schema Detail.
     -----------------------------------------------------------------------------"""
@@ -26,7 +27,7 @@ class ErrorSchemaDetail(ParentSchema):
     name: Annotated[str, Field()]
 
 
-class ErrorSchema(ParentSchema):
+class ErrorSchema(APISchema):
     """-----------------------------------------------------------------------------
     The Error Schema.
     -----------------------------------------------------------------------------"""
