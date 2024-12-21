@@ -1,4 +1,4 @@
-# {{cookiecutter.project_name}}
+# {{cookiecutter.app_name.upper()}}
 
 ## Overview
 
