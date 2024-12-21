@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "my-fastapi-{{cookiecutter.project_name}}"
+name = "my-fastapi-kot"
 version = "0.1.0"
 description = ""
-authors = ["{{cookiecutter.author_name}} <{{cookiecutter.author_email}}>"]
+authors = ["Max <akimmax@gmail.com>"]
 readme = "README.md"
 package-mode = false
 
@@ -15,12 +15,24 @@ pydantic = "^2.10.3"
 dishka = "^1.4.2"
 typer = "^0.15.1"
 pyyaml = "^6.0.2"
+motor = "^3.6.0"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.36"}
+asyncpg = "^0.30.0"
+alembic = "^1.14.0"
+aiokafka = "^0.12.0"
+orjson = "^3.10.12"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.30.0"
 ruff = "^0.8.3"
 pre-commit = "^4.0.1"
 mypy = "^1.13.0"
+pytest = "^8.3.4"
+pytest-asyncio = "^0.25.0"
+faker = "^33.1.0"
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
 
 [build-system]
 requires = ["poetry-core"]
@@ -47,3 +59,8 @@ line-length = 88
 multiline-quotes = "double"
 inline-quotes = "double"
 avoid-escape = true
+
+[tool.ruff.lint.per-file-ignores]
+"src/tests/**/*.py" = [
+    "S101",
+]
