@@ -1,18 +1,18 @@
 # endregion-------------------------------------------------------------------------
-# region APPLICATION BASE EXCEPTIONS
+# region INFRASTRUCTURE BASE EXCEPTIONS
 # ----------------------------------------------------------------------------------
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-from domain.common.exceptions import ExceptionBase
+from presentation.exceptions import PresentationExceptionBase
 
 
 @dataclass(frozen=False)
-class ApplicationExceptionBase(ExceptionBase, ABC):
+class InfrastructureExceptionBase(PresentationExceptionBase, ABC):
     @property
     @abstractmethod
     def message(self) -> str:
-        return "Application error occured"
+        return "Infrastructure exception occured"
 
 
 # endregion-------------------------------------------------------------------------
