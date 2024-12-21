@@ -1,0 +1,44 @@
+services:
+  app:
+    container_name: kot_app
+    depends_on:
+      db:
+        condition: service_healthy
+      broker:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - APP_ENV=development
+    ports:
+      - ${APP_PORT:-8000}:${APP_PORT:-8000}
+    command: "python console.py run"
+    environment:
+      - MONGO_PORT=${MONGO_PORT:-27017}
+      - MONGO_HOST=${MONGO_HOST:-db}
+      - MONGO_DB=${MONGO_DB:-kot}
+
+      - APP_PORT=${APP_PORT:-8000}
+      - APP_ENV=${APP_ENV:-development}
+
+      - SQL_DB=${SQL_DB:-dev_db}
+      - SQL_USER=${SQL_USER:-dev_user}
+      - SQL_PASS=${SQL_PASS:-dev_pass}
+      - SQL_HOST=${SQL_HOST:-db-sql}
+      - SQL_PORT=${SQL_PORT:-5432}
+    healthcheck:
+      test: ["CMD-SHELL", "python console.py check-health"]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - ./src:/src
+    networks:
+      - app
+
+networks:
+  app:
+    name: kot_network
+    driver: bridge

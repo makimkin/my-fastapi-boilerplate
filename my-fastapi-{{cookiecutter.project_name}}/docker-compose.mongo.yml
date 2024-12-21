@@ -1,0 +1,36 @@
+services:
+  db:
+    container_name: kot_db
+    image: mongo:7.0
+    ports:
+      - ${MONGO_PORT:-27017}:27017
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mongosh",
+          "--eval",
+          "db.runCommand({ connectionStatus: 1 })",
+          "--quiet",
+          "||",
+          "exit",
+          "1",
+        ]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    networks:
+      - app
+
+volumes:
+  mongodb_data:
+    name: kot_mongo_data
+    driver: local
+
+networks:
+  app:
+    name: kot_network
+    driver: bridge

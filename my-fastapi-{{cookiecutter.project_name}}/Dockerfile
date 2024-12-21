@@ -26,17 +26,17 @@ COPY poetry.lock pyproject.toml ./
 RUN python -m pip install --no-cache-dir poetry
 RUN poetry self add poetry-plugin-export
 
-RUN if [ "$APP_ENV" = "development" ]; then poetry export -o requirements.txt --without-hashes --with=dev; else poetry export -o requirements.txt --without-hashes; fi
+RUN if [ "$APP_ENV" = "production" ]; then poetry export -o requirements.txt --without-hashes ; else poetry export -o requirements.txt --without-hashes --with=dev ; fi
 
 # ------------------------------------------------------------------------------
 # BUILD STAGE
 # ------------------------------------------------------------------------------
 FROM base AS build
 
-COPY --from=poetry /requirements.txt ./requirements.txt
+COPY --from=poetry /requirements.txt /tmp/requirements.txt
 
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 RUN chown -R app_user:app_group /src
 

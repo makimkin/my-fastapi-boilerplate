@@ -11,3 +11,9 @@ __pycache__
 
 # LOGS
 logs
+
+# MONGO
+.playground
+
+# VSCODE
+.vscode

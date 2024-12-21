@@ -1,31 +1,56 @@
 dc := "docker compose"
 
-file_docker := "-f docker-compose.yml"
+file_app := "--file docker-compose.app.yml"
+file_db := "--file docker-compose.mongo.yml"
+file_broker := "--file docker-compose.kafka.yml"
 
-profile_api := "--profile api"
+container_app := "app"
+container_db := "db"
 
-container_app := "{{cookiecutter.app_name.lower()}}_app"
-
+command := dc + " " + file_app + " " + file_db + " " + file_broker
 
 default:
   just --list
 
 install:
+    deactivate || true
     rm -rf .venv
     python3.13 -m venv .venv
     . .venv/bin/activate
     poetry install
-    pre-commit install
-    pre-commit autoupdate --repo https://github.com/charliermarsh/ruff-pre-commit --repo https://github.com/pre-commit/pre-commit-hooks --repo https://github.com/pre-commit/mirrors-mypy
 
 up args="":
-  {{dc}} {{file_docker}} {{profile_api}} up --build --remove-orphans {{args}}
+  {{command}} up --build --remove-orphans {{args}}
 
 down args="":
-  {{dc}} {{file_docker}} {{profile_api}} down {{args}}
+  {{command}} down {{args}}
+
+test args="":
+  {{command}} exec app python -m pytest {{args}}
+
+ruff args="":
+  ruff check ./src --fix
+
+restart args="":
+  {{command}} restart
 
 app-restart args="":
-  docker restart {{container_app}} {{args}}
+  {{command}} restart {{container_app}} {{args}}
 
 app-logs args="":
-  docker logs {{container_app}} {{args}}
+  {{command}} logs {{container_app}} {{args}}
+
+app-migration-gen:
+  {{command}} exec {{container_app}} alembic revision --autogenerate
+
+app-migration-up:
+  {{command}} exec {{container_app}} alembic upgrade head
+
+sql-connect:
+  {{command}} exec {{container_db}} psql -U dev_user kot-db
+
+ci-build:
+  {{command}} build
+
+ci-test:
+  {{command}} run --rm {{container_app}} sh -c "python -m pytest -s --sw -vvv"
