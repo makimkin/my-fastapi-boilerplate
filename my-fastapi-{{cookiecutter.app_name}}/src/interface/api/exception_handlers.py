@@ -3,7 +3,7 @@
 # ----------------------------------------------------------------------------------
 import logging
 
-from domain.common.exceptions import ExceptionBase
+from exceptions import ExceptionBase
 
 from fastapi import Request, HTTPException, status
 

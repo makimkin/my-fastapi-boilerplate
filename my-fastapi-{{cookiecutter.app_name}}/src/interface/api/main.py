@@ -9,7 +9,7 @@ from .exception_handlers import base_exception_handler
 from .lifespan import on_startup, on_shutdown
 from .base import base_router
 
-from domain.common.exceptions import ExceptionBase
+from exceptions import ExceptionBase
 
 from infrastructure.containers.app import ContainerApp
 
