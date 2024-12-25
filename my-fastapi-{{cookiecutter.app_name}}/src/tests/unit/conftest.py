@@ -33,9 +33,4 @@ async def config(container: AsyncContainer) -> Config:
     return await container.get(Config)
 
 
-@pytest_asyncio.fixture(scope="function")
-async def products_repository(container: AsyncContainer) -> ProductsRepositoryBase:
-    return await container.get(ProductsRepositoryBase)
-
-
 # endregion-------------------------------------------------------------------------
