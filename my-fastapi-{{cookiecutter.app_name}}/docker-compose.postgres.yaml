@@ -1,7 +1,7 @@
 services:
   db:
     container_name: {{cookiecutter.app_name}}_db
-    image: postgres:${POSTGRES_VERSION:-7.4.1}-alpine${ALPINE_VERSION:-3.21}
+    image: postgres:${POSTGRES_VERSION:-7.4.1}-alpine${POSTGRES_ALPINE_VERSION:-3.21}
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:

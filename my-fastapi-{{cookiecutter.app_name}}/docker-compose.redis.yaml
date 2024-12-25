@@ -1,6 +1,6 @@
 services:
   cache:
-    image: redis:${REDIS_VERSION:-7.4.1}-alpine${ALPINE_VERSION:-3.21}
+    image: redis:${REDIS_VERSION:-7.4.1}-alpine${REDIS_ALPINE_VERSION:-3.20}
     container_name: {{cookiecutter.app_name}}_cache
     volumes:
       - redis-data:/data
