@@ -4,7 +4,7 @@
 from sqlalchemy.orm import DeclarativeBase
 
 
-class Base(DeclarativeBase):
+class ModelBase(DeclarativeBase):
     __allow_unmapped__ = True
 
 

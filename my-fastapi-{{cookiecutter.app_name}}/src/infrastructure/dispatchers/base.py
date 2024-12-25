@@ -6,9 +6,10 @@ from collections import defaultdict
 from abc import ABC, abstractmethod
 from typing import Any, Type
 
-from domain.common.command import CommandBase, CommandHandlerBase
+from application.common.command import CommandBase, CommandHandlerBase
+from application.common.query import QueryBase, QueryHandlerBase
+
 from domain.common.event import EventBase, EventHandlerBase
-from domain.common.query import QueryBase, QueryHandlerBase
 
 
 @dataclass(eq=False, kw_only=True)

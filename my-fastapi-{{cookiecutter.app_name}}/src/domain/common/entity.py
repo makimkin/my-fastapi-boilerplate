@@ -9,7 +9,7 @@ from domain.common.event import EventBase
 
 
 @dataclass(eq=False, kw_only=True)
-class BaseEntity(ABC):
+class EntityBase(ABC):
     oid: str = field(
         default_factory=lambda: str(uuid4()),
         metadata={"description": "Unique identifier"},
@@ -39,7 +39,7 @@ class BaseEntity(ABC):
 
     @classmethod
     @abstractmethod
-    def from_document(cls, document: dict) -> "BaseEntity": ...
+    def from_document(cls, document: dict) -> "EntityBase": ...
 
 
 # endregion-------------------------------------------------------------------------

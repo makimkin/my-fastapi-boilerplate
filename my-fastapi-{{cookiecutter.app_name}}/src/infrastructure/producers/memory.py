@@ -14,11 +14,11 @@ class ProducerMemory(ProducerBase):
     async def send_message(self, topic: str, value: bytes) -> None:
         self.events[topic].append(value)
 
-    async def close(self) -> None:
-        await super().close()
+    async def _close(self) -> None:
+        return
 
-    async def connect(self) -> None:
-        await super().connect()
+    async def _connect(self) -> None:
+        return
 
 
 # endregion-------------------------------------------------------------------------

@@ -4,11 +4,11 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-from presentation.exceptions import PresentationExceptionBase
+from exceptions import ExceptionBase
 
 
 @dataclass(frozen=False)
-class InfrastructureExceptionBase(PresentationExceptionBase, ABC):
+class InfrastructureExceptionBase(ExceptionBase, ABC):
     @property
     @abstractmethod
     def message(self) -> str:

@@ -6,9 +6,10 @@ import logging
 from dataclasses import dataclass
 from typing import Any, Type
 
-from domain.common.command import CommandBase, CommandHandlerBase
+from application.common.command import CommandBase, CommandHandlerBase
+from application.common.query import QueryBase, QueryHandlerBase
+
 from domain.common.event import EventBase, EventHandlerBase
-from domain.common.query import QueryBase, QueryHandlerBase
 
 from infrastructure.dispatchers.base import (
     DispatcherCommand,

@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from infrastructure.orm.models.base import Base
+from infrastructure.orm.models.base import ModelBase
 from infrastructure.orm.models import *  # noqa: F403
 
 from alembic import context
@@ -27,7 +27,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = Base.metadata
+target_metadata = ModelBase.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

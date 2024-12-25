@@ -4,27 +4,22 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-from motor.core import AgnosticClient
+from motor.motor_asyncio import AsyncIOMotorCollection
+
+from domain.common.entity import EntityBase
 
 from .base import RepositoryBase
 
 
 @dataclass
-class RepositoryMongo(RepositoryBase, ABC):
-    mongo_client: AgnosticClient
-    mongo_db_name: str
+class RepositoryMongo[E: EntityBase](RepositoryBase, ABC):
+    collection: AsyncIOMotorCollection
 
-    @property
-    def collection(self):
-        return self.mongo_client[self.mongo_db_name][self.mongo_collection_name]
-
-    @property
-    def mongo_collection_name(self) -> str:
-        return self._get_mongo_collection_name()
-
-    @classmethod
     @abstractmethod
-    def _get_mongo_collection_name(cls) -> str: ...
+    def to_domain(self, document: dict) -> E: ...
+
+    @abstractmethod
+    def to_document(self, entity: E) -> dict: ...
 
 
 # endregion-------------------------------------------------------------------------
