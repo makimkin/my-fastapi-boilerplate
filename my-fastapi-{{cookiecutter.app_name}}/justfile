@@ -2,12 +2,13 @@ dc := "docker compose"
 
 file_app := "--file docker-compose.app.yml"
 file_db := "--file docker-compose.mongo.yml"
+file_cache := "--file docker-compose.redis.yml"
 file_broker := "--file docker-compose.kafka.yml"
 
 container_app := "app"
 container_db := "db"
 
-command := dc + " " + file_app + " " + file_db + " " + file_broker
+command := dc + " " + file_app + " " + file_db + " " + file_broker + " " + file_cache
 
 default:
   just --list

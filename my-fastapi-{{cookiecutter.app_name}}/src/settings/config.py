@@ -33,6 +33,9 @@ class Config(BaseSettings):
     KAFKA_PORT: Annotated[int, Field(alias="KAFKA_PORT")] = 9092
     KAFKA_HOST: Annotated[str, Field(alias="KAFKA_HOST")] = "broker"
 
+    REDIS_HOST: Annotated[str, Field(alias="REDIS_HOST")] = "localhost"
+    REDIS_PORT: Annotated[int, Field(alias="REDIS_PORT")] = 6379
+
     TOPIC_NAME_PRODUCT_CREATED: Annotated[
         str,
         Field(alias="TOPIC_NAME_PRODUCT_CREATED"),
@@ -49,6 +52,10 @@ class Config(BaseSettings):
     @property
     def KAFKA_URI(self) -> str:
         return f"{self.KAFKA_HOST}:{self.KAFKA_PORT}"
+
+    @property
+    def REDIS_URI(self) -> str:
+        return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}"
 
 
 # endregion-------------------------------------------------------------------------

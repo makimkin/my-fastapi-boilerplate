@@ -1,0 +1,24 @@
+services:
+  cache:
+    image: redis:${REDIS_VERSION:-7.4.1}-alpine${ALPINE_VERSION:-3.21}
+    container_name: {{cookiecutter.app_name}}_cache
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - app
+
+volumes:
+  redis-data:
+    name: {{cookiecutter.app_name}}_redis_data
+    driver: local
+
+networks:
+  app:
+    name: {{cookiecutter.app_name}}_network
+    driver: bridge
