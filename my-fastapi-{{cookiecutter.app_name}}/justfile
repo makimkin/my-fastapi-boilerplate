@@ -1,9 +1,9 @@
 dc := "docker compose"
 
-file_app := "--file docker-compose.app.yml"
-file_db := "--file docker-compose.mongo.yml"
-file_cache := "--file docker-compose.redis.yml"
-file_broker := "--file docker-compose.kafka.yml"
+file_app := "--file docker-compose.app.yaml"
+file_db := "--file docker-compose.mongo.yaml"
+file_cache := "--file docker-compose.redis.yaml"
+file_broker := "--file docker-compose.kafka.yaml"
 
 container_app := "app"
 container_db := "db"
