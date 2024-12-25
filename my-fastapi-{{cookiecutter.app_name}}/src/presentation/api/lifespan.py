@@ -7,6 +7,8 @@ from fastapi import FastAPI
 
 from infrastructure.producers.base import ProducerBase
 
+from dishka.exceptions import NoFactoryError
+
 logger = logging.getLogger("app")
 
 
@@ -16,8 +18,13 @@ async def on_startup(app: FastAPI) -> None:
     -----------------------------------------------------------------------------"""
     logger.info("STARTUP")
 
-    producer = await app.state.dishka_container.get(ProducerBase)
-    await producer.connect()
+    try:
+        logger.info("Connecting to producer")
+        producer = await app.state.dishka_container.get(ProducerBase)
+        await producer.connect()
+        logger.info("Connected to producer")
+    except NoFactoryError as e:
+        logger.error("No factory found for producer", exc_info=e)
 
 
 async def on_shutdown(app: FastAPI) -> None:
@@ -26,8 +33,13 @@ async def on_shutdown(app: FastAPI) -> None:
     -----------------------------------------------------------------------------"""
     logger.info("SHUTDOWN")
 
-    producer = await app.state.dishka_container.get(ProducerBase)
-    await producer.close()
+    try:
+        logger.info("Closing producer")
+        producer = await app.state.dishka_container.get(ProducerBase)
+        await producer.close()
+        logger.info("Closed producer")
+    except NoFactoryError as e:
+        logger.error("No factory found for producer", exc_info=e)
 
     await app.state.dishka_container.close()
 
