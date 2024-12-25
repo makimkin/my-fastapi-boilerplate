@@ -21,6 +21,7 @@ asyncpg = "^0.30.0"
 alembic = "^1.14.0"
 aiokafka = "^0.12.0"
 orjson = "^3.10.12"
+aioredis = {extras = ["hiredis"], version = "^2.0.1"}
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.30.0"
