@@ -10,9 +10,9 @@ services:
       timeout: 3s
       retries: 3
     environment:
-      - POSTGRES_DB=${SQL_DB:-dev_db}
-      - POSTGRES_USER=${SQL_USER:-dev_user}
-      - POSTGRES_PASSWORD=${SQL_PASS:-dev_pass}
+      - POSTGRES_DB=${POSTGRES_DB:-dev_db}
+      - POSTGRES_USER=${POSTGRES_USER:-dev_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS:-dev_pass}
     networks:
       - app
 

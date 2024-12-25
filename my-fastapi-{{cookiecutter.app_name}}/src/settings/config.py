@@ -24,11 +24,11 @@ class Config(BaseSettings):
     MONGO_PORT: Annotated[int, Field(alias="MONGO_PORT")] = 27017
     MONGO_DB: Annotated[str, Field(alias="MONGO_DB")] = "db"
 
-    SQL_HOST: Annotated[str, Field(alias="SQL_HOST")] = "localhost"
-    SQL_USER: Annotated[str, Field(alias="SQL_USER")] = "user"
-    SQL_PASS: Annotated[str, Field(alias="SQL_PASS")] = "pass"
-    SQL_PORT: Annotated[int, Field(alias="SQL_PORT")] = 5432
-    SQL_DB: Annotated[str, Field(alias="SQL_DB")] = "db"
+    POSTGRES_HOST: Annotated[str, Field(alias="POSTGRES_HOST")] = "localhost"
+    POSTGRES_USER: Annotated[str, Field(alias="POSTGRES_USER")] = "user"
+    POSTGRES_PASS: Annotated[str, Field(alias="POSTGRES_PASS")] = "pass"
+    POSTGRES_PORT: Annotated[int, Field(alias="POSTGRES_PORT")] = 5432
+    POSTGRES_DB: Annotated[str, Field(alias="POSTGRES_DB")] = "db"
 
     KAFKA_PORT: Annotated[int, Field(alias="KAFKA_PORT")] = 9092
     KAFKA_HOST: Annotated[str, Field(alias="KAFKA_HOST")] = "broker"
@@ -47,7 +47,7 @@ class Config(BaseSettings):
 
     @property
     def SQL_URI(self) -> str:
-        return f"postgresql+asyncpg://{self.SQL_USER}:{self.SQL_PASS}@{self.SQL_HOST}:{self.SQL_PORT}/{self.SQL_DB}"
+        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASS}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
 
     @property
     def KAFKA_URI(self) -> str:
