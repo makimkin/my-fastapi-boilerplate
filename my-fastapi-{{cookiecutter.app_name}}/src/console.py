@@ -29,7 +29,7 @@ def check_health():
 def run():
     config = Config()
     uvicorn.run(
-        "presentation.api.main:create_app",
+        "interface.api.main:create_app",
         reload=True,
         factory=True,
         host="0.0.0.0",  # noqa: S104
