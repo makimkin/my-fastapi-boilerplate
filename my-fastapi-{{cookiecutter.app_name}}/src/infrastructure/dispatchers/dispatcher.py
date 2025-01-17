@@ -16,10 +16,10 @@ from infrastructure.dispatchers.base import (
     DispatcherEvent,
     DispatcherQuery,
 )
-from infrastructure.dispatchers.exceptions import (
-    InfrastructureDispatcherNoCommandHandlerFound,
-    InfrastructureDispatcherNoEventHandlerFound,
-    InfrastructureDispatcherNoQueryHandlerFound,
+from .exceptions import (
+    DispatcherNoCommandHandlerFound,
+    DispatcherNoEventHandlerFound,
+    DispatcherNoQueryHandlerFound,
 )
 
 
@@ -28,7 +28,9 @@ logger = logging.getLogger("app")
 
 @dataclass(eq=False, kw_only=True)
 class Dispatcher[C: CommandBase, CR: Any, Q: QueryBase, QR: Any, E: EventBase](
-    DispatcherCommand[C, CR], DispatcherQuery[Q, QR], DispatcherEvent[E]
+    DispatcherCommand[C, CR],
+    DispatcherQuery[Q, QR],
+    DispatcherEvent[E],
 ):
     # endregion---------------------------------------------------------------------
     # region COMMANDS
@@ -47,9 +49,7 @@ class Dispatcher[C: CommandBase, CR: Any, Q: QueryBase, QR: Any, E: EventBase](
         handlers = self.commands_map.get(command.__class__.__name__, None)
 
         if handlers is None:
-            raise InfrastructureDispatcherNoCommandHandlerFound(
-                command.__class__.__name__
-            )
+            raise DispatcherNoCommandHandlerFound(command.__class__.__name__)
 
         return [await handler.handle(command) for handler in handlers]
 
@@ -70,7 +70,7 @@ class Dispatcher[C: CommandBase, CR: Any, Q: QueryBase, QR: Any, E: EventBase](
         handler = self.queries_map.get(query.__class__.__name__, None)
 
         if handler is None:
-            raise InfrastructureDispatcherNoQueryHandlerFound(query.__class__.__name__)
+            raise DispatcherNoQueryHandlerFound(query.__class__.__name__)
 
         return await handler.handle(query)
 
@@ -88,7 +88,7 @@ class Dispatcher[C: CommandBase, CR: Any, Q: QueryBase, QR: Any, E: EventBase](
         handlers = self.events_map.get(event.__class__.__name__, None)
 
         if handlers is None:
-            raise InfrastructureDispatcherNoEventHandlerFound(event.__class__.__name__)
+            raise DispatcherNoEventHandlerFound(event.__class__.__name__)
 
         [await handler.handle(event) for handler in handlers]
 

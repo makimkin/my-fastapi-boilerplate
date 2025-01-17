@@ -12,7 +12,9 @@ from pydantic import Field
 # region HEALTHCHECK
 # ----------------------------------------------------------------------------------
 class BaseHealthCheckResponse(APISchema):
-    di: Annotated[str, Field(alias="di")]
+    producer: Annotated[str, Field(alias="producer")]
+    authenticator: Annotated[str, Field(alias="authenticator")]
+    connection_manager: Annotated[str, Field(alias="connectionManager")]
 
 
 # endregion-------------------------------------------------------------------------

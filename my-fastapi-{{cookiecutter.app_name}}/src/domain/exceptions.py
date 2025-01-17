@@ -16,3 +16,15 @@ class DomainExceptionBase(ExceptionBase, ABC):
 
 
 # endregion-------------------------------------------------------------------------
+# region VALUIE OBJECTS EXCEPTIONS
+# ----------------------------------------------------------------------------------
+@dataclass(frozen=False)
+class ValueObjectEntityIdIncorrectValueException(DomainExceptionBase):
+    value: str
+
+    @property
+    def message(self) -> str:
+        return f"EntityId value is incorrect: {self.value}"
+
+
+# endregion-------------------------------------------------------------------------

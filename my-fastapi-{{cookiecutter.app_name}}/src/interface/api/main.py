@@ -3,11 +3,16 @@
 # ----------------------------------------------------------------------------------
 import logging
 
-from contextlib import asynccontextmanager
+from .lifespan import LifespanManager
 
-from .exception_handlers import base_exception_handler
-from .lifespan import on_startup, on_shutdown
+from .exception_handlers import (
+    base_exception_handler,
+    response_validation_exception_handler,
+)
+
 from .base import base_router
+
+from .middlewares import ProcessTimeMiddleware
 
 from exceptions import ExceptionBase
 
@@ -18,6 +23,8 @@ from logger import setup_logger
 from dishka.integrations.fastapi import setup_dishka
 from dishka import make_async_container
 
+from fastapi.exceptions import ResponseValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import APIRouter, FastAPI
 
 logger = logging.getLogger("app")
@@ -26,20 +33,14 @@ logger = logging.getLogger("app")
 router_v1 = APIRouter(prefix="/v1")
 
 
-@asynccontextmanager
-async def lifespan_manager(app: FastAPI):
-    await on_startup(app)
-
-    yield
-
-    await on_shutdown(app)
+allowed_origins = ["http://localhost:5173", "http://localhost:4173"]
 
 
 def create_app_base() -> FastAPI:
     app = FastAPI(
-        title="KOT API",
-        lifespan=lifespan_manager,
-        description="API for kot",
+        title="{{cookiecutter.app_name.upper()}}} API",
+        lifespan=LifespanManager,
+        description="API for {{cookiecutter.app_name}}} service",
         version="0.1.0",
     )
 
@@ -47,7 +48,20 @@ def create_app_base() -> FastAPI:
 
     app.include_router(router_v1)
 
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=allowed_origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    app.add_middleware(ProcessTimeMiddleware)
+
     app.exception_handlers[ExceptionBase] = base_exception_handler
+    app.exception_handlers[ResponseValidationError] = (
+        response_validation_exception_handler
+    )
 
     return app
 

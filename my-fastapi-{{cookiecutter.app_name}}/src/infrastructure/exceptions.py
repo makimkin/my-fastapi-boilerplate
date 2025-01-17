@@ -4,6 +4,8 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
+from fastapi import status
+
 from exceptions import ExceptionBase
 
 

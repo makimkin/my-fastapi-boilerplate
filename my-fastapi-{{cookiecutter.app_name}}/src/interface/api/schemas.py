@@ -3,7 +3,11 @@
 # ----------------------------------------------------------------------------------
 from typing import Annotated
 
-from pydantic import Field, BaseModel, ConfigDict
+from pydantic import AfterValidator, Field, BaseModel, ConfigDict
+
+from domain.common.value_object import EntityId
+
+from .validators import validate_str_value_object
 
 
 class APISchema(BaseModel):
@@ -34,5 +38,14 @@ class ErrorSchema(APISchema):
 
     detail: Annotated[ErrorSchemaDetail, Field()]
 
+
+# endregion-------------------------------------------------------------------------
+# region FIELDS
+# ----------------------------------------------------------------------------------
+FIELD_ID = Annotated[
+    EntityId | str,
+    Field(description="The ID field"),
+    AfterValidator(validate_str_value_object),
+]
 
 # endregion-------------------------------------------------------------------------

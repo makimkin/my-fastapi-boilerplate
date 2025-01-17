@@ -17,3 +17,6 @@ logs
 
 # VSCODE
 .vscode
+
+# OTHER
+.DS_Store

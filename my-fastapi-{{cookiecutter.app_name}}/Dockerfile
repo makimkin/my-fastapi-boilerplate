@@ -11,29 +11,39 @@ ENV PYTHONDONTWRITEBYTECODE 1 && \
 
 RUN apt update -y
 
+# ------------------------------------------------------------------------------
+# USER STAGE
+# ------------------------------------------------------------------------------
+FROM base AS user
+
 RUN addgroup --system app_group && \
     adduser --system --ingroup app_group app_user
 
 WORKDIR /src
 
 # ------------------------------------------------------------------------------
-# POETRY STAGE
+# POETRY DEPENDENCIES
 # ------------------------------------------------------------------------------
-FROM python:${PYTHON_VERSION}-slim AS poetry
+FROM base AS dependencies
 
 COPY poetry.lock pyproject.toml ./
 
 RUN python -m pip install --no-cache-dir poetry
 RUN poetry self add poetry-plugin-export
 
-RUN if [ "$APP_ENV" = "production" ]; then poetry export -o requirements.txt --without-hashes ; else poetry export -o requirements.txt --without-hashes --with=dev ; fi
+ARG DB_FLAG="--without-hashes --with=sql --with=mongo"
+RUN if [ "$APP_ENV" = "production" ]; then \
+    poetry export -o requirements.txt ${DB_FLAG} ; \
+    else \
+    poetry export -o requirements.txt ${DB_FLAG} --with=dev ; \
+    fi
 
 # ------------------------------------------------------------------------------
 # BUILD STAGE
 # ------------------------------------------------------------------------------
-FROM base AS build
+FROM user AS build
 
-COPY --from=poetry /requirements.txt /tmp/requirements.txt
+COPY --from=dependencies /requirements.txt /tmp/requirements.txt
 
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r /tmp/requirements.txt

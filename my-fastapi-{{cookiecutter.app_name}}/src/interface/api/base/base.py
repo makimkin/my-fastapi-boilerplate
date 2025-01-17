@@ -3,7 +3,7 @@
 # ----------------------------------------------------------------------------------
 from ..actions import Actions
 
-PREFIX = ""
+BASE_PREFIX = ""
 
 
 class BASE_ACTIONS(Actions):

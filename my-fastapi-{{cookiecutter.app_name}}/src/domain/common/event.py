@@ -3,6 +3,7 @@
 # ----------------------------------------------------------------------------------
 import datetime
 import logging
+import orjson
 import uuid
 
 from dataclasses import dataclass, field
@@ -22,15 +23,24 @@ class EventBase(ABC):
         init=False,
     )
 
-    @abstractmethod
-    def to_bytes(self) -> bytes: ...
+    def to_bytes(self) -> bytes:
+        return orjson.dumps(self.to_dict())
 
-    @abstractmethod
     def to_dict(self) -> dict:
         return {
             "event_id": str(self.event_id),
+            "event_name": self.event_name,
             "event_timestamp": self.event_timestamp.isoformat(),
+            **self._to_dict(),
         }
+
+    @property
+    @abstractmethod
+    def event_name(self) -> str: ...
+
+    @abstractmethod
+    def _to_dict(self) -> dict:
+        return {}
 
 
 @dataclass(frozen=True)
@@ -43,10 +53,10 @@ class EventHandlerBase[E: EventBase](ABC):
             f"{self.__class__.__name__} handles event {event.__class__.__name__}"
         )
 
-        return await self._handle(event)
-
-    @abstractmethod
-    async def _handle(self, event: E) -> None: ...
+        await self.producer.send_message(
+            topic=self.topic,
+            value=event.to_bytes(),
+        )
 
 
 # endregion-------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 services:
   db:
     container_name: {{cookiecutter.app_name}}_db
-    image: postgres:${POSTGRES_VERSION:-7.4.1}-alpine${POSTGRES_ALPINE_VERSION:-3.21}
+    image: postgres:${POSTGRES_VERSION:-17.2}-alpine${POSTGRES_ALPINE_VERSION:-3.21}
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -16,9 +16,29 @@ services:
     networks:
       - app
 
+  db-ui:
+    image: dpage/pgadmin4:latest
+    container_name: {{cookiecutter.app_name}}_db_ui
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - pgadmin-conf:/var/lib/pgadmin
+    ports:
+      - 5050:80
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL:-admin@dev.com}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD:-admin}
+    networks:
+      - app
+
 volumes:
   postgres-data:
     name: {{cookiecutter.app_name}}_postgres_data
+    driver: local
+  pgadmin-conf:
+    name: {{cookiecutter.app_name}}_pgadmin_conf
     driver: local
 
 networks:

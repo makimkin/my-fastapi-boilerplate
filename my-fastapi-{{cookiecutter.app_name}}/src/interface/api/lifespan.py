@@ -1,47 +1,37 @@
 # endregion-------------------------------------------------------------------------
-# region LIFE SPAN CALLBACKS
+# region LIFESPAN MANAGER
 # ----------------------------------------------------------------------------------
 import logging
 
+from dataclasses import dataclass
+
+from dishka import AsyncContainer
 from fastapi import FastAPI
-
-from infrastructure.producers.base import ProducerBase
-
-from dishka.exceptions import NoFactoryError
 
 logger = logging.getLogger("app")
 
 
-async def on_startup(app: FastAPI) -> None:
-    """-----------------------------------------------------------------------------
-    Callback to run on application startup.
-    -----------------------------------------------------------------------------"""
-    logger.info("STARTUP")
+@dataclass
+class LifespanManager:
+    app: FastAPI
 
-    try:
-        logger.info("Connecting to producer")
-        producer = await app.state.dishka_container.get(ProducerBase)
-        await producer.connect()
-        logger.info("Connected to producer")
-    except NoFactoryError as e:
-        logger.error("No factory found for producer", exc_info=e)
+    @property
+    def container(self) -> AsyncContainer:
+        return self.app.state.dishka_container
 
+    async def __aenter__(self) -> None:
+        """-----------------------------------------------------------------------------
+        Activate the lifespan of the application.
+        -----------------------------------------------------------------------------"""
+        logger.info("STARTUP")
 
-async def on_shutdown(app: FastAPI) -> None:
-    """-----------------------------------------------------------------------------
-    Callback to run on application shutdown.
-    -----------------------------------------------------------------------------"""
-    logger.info("SHUTDOWN")
+    async def __aexit__(self, *_, **__) -> None:
+        """-----------------------------------------------------------------------------
+        Deactivate the lifespan of the application.
+        -----------------------------------------------------------------------------"""
+        logger.info("SHUTDOWN")
 
-    try:
-        logger.info("Closing producer")
-        producer = await app.state.dishka_container.get(ProducerBase)
-        await producer.close()
-        logger.info("Closed producer")
-    except NoFactoryError as e:
-        logger.error("No factory found for producer", exc_info=e)
-
-    await app.state.dishka_container.close()
+        await self.container.close()
 
 
 # endregion-------------------------------------------------------------------------

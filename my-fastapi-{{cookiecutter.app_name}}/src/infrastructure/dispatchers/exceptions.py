@@ -1,36 +1,35 @@
 # endregion-------------------------------------------------------------------------
-# region INFRASTRUCTURE DISPATCHERS EXCEPTIONS
+# region DISPATCHER EXCEPTIONS
 # ----------------------------------------------------------------------------------
 from dataclasses import dataclass
 
 from ..exceptions import InfrastructureExceptionBase
 
-
 @dataclass(frozen=False)
-class InfrastructureDispatcherNoQueryHandlerFound(InfrastructureExceptionBase):
+class DispatcherNoQueryHandlerFound(InfrastructureExceptionBase):
     name: str
 
     @property
     def message(self) -> str:
-        return "There is no query handler for query {self.name}"
+        return f"There is no query handler for query {self.name}"
 
 
 @dataclass(frozen=False)
-class InfrastructureDispatcherNoCommandHandlerFound(InfrastructureExceptionBase):
+class DispatcherNoCommandHandlerFound(InfrastructureExceptionBase):
     name: str
 
     @property
     def message(self) -> str:
-        return "There are no command handlers for command {self.name}"
+        return f"There are no command handlers for command {self.name}"
 
 
 @dataclass(frozen=False)
-class InfrastructureDispatcherNoEventHandlerFound(InfrastructureExceptionBase):
+class DispatcherNoEventHandlerFound(InfrastructureExceptionBase):
     name: str
 
     @property
     def message(self) -> str:
-        return "There are no event handlers for event {self.name}"
+        return f"There are no event handlers for event {self.name}"
 
 
 # endregion-------------------------------------------------------------------------
