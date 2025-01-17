@@ -27,12 +27,10 @@ async def test_health_check_success(
     assert health_check_response.status_code == status.HTTP_200_OK, health_check_response.text
 
     health_check_json, text = health_check_response.json(), health_check_response.text
-    assert "producer" in health_check_json, text
     assert "authenticator" in health_check_json, text
     assert "connectionManager" in health_check_json, text
 
     health_check_data = BaseHealthCheckResponse(**health_check_json)
-    assert health_check_data.producer is not None, text
     assert health_check_data.authenticator is not None, text
     assert health_check_data.connection_manager is not None, text
     # fmt: on

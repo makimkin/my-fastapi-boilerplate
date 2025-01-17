@@ -6,7 +6,6 @@ from fastapi import status
 
 from infrastructure.connection_manager.common.base import ConnectionManagerBase
 from infrastructure.authenticator.base import AuthenticatorBase
-from infrastructure.producers.common.base import ProducerBase
 
 from dishka.integrations.fastapi import FromDishka, DishkaRoute
 
@@ -24,13 +23,11 @@ router = APIRouter(prefix=BASE_PREFIX, route_class=DishkaRoute)
 async def base_health_check(
     connection_manager: FromDishka[ConnectionManagerBase],
     authenticator: FromDishka[AuthenticatorBase],
-    producer: FromDishka[ProducerBase],
 ) -> dict:
     """-----------------------------------------------------------------------------
     The Base Health Check Handler.
     -----------------------------------------------------------------------------"""
     return {
-        "producer": producer.__class__.__name__,
         "authenticator": authenticator.__class__.__name__,
         "connection_manager": connection_manager.__class__.__name__,
     }
