@@ -40,12 +40,6 @@ class CacheRedis(CacheBase, ABC):
             px=expiration_milliseconds,
         )
 
-    async def increment(self, key: str, amount: int = 1) -> int:
-        return await self.redis.incrby(key, amount)
-
-    async def decrement(self, key: str, amount: int = 1) -> int:
-        return await self.redis.decrby(key, amount)
-
     async def get_keys(self, pattern: str) -> list[str]:
         cursor, keys = 0, []
 

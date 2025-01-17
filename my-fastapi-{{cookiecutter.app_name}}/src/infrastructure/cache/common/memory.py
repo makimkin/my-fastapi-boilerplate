@@ -52,24 +52,6 @@ class CacheMemory(CacheBase, ABC):
             )
 
     @_apply_expiration
-    async def increment(self, key: str, amount: int = 1) -> int:
-        value = int(orjson.loads(self._saved.get(key, b"0")))
-
-        value += amount
-        self._saved[key] = orjson.dumps(value)
-
-        return value
-
-    @_apply_expiration
-    async def decrement(self, key: str, amount: int = 1) -> int:
-        value = int(orjson.loads(self._saved.get(key, b"0")))
-
-        value -= amount
-        self._saved[key] = orjson.dumps(value)
-
-        return value
-
-    @_apply_expiration
     async def get_keys(self, pattern: str) -> list[str]:
         p = re.compile(pattern.replace("*", ".*"))
 

@@ -23,14 +23,6 @@ class CacheBase(ABC):
         pass
 
     @abstractmethod
-    async def increment(self, key: str, amount: int = 1) -> int:
-        pass
-
-    @abstractmethod
-    async def decrement(self, key: str, amount: int = 1) -> int:
-        pass
-
-    @abstractmethod
     async def get_keys(self, pattern: str) -> list[str]:
         pass
 
