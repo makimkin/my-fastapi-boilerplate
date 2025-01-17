@@ -9,7 +9,7 @@ import uuid
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 
-from infrastructure.producers.base import ProducerBase
+from infrastructure.producers.common.base import ProducerBase
 
 logger = logging.getLogger("app")
 

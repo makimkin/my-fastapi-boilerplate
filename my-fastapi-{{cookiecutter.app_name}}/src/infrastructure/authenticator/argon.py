@@ -7,7 +7,7 @@ import jwt
 from argon2 import PasswordHasher
 from dataclasses import dataclass
 
-from ..exceptions import (
+from .exceptions import (
     AuthenticatorExpiredRefreshTokenException,
     AuthenticatorInvalidRefreshTokenException,
     AuthenticatorExpiredAccessTokenException,

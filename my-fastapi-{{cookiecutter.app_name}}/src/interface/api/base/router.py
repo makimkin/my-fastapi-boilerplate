@@ -6,7 +6,7 @@ from fastapi import status
 
 from infrastructure.connection_manager.common.base import ConnectionManagerBase
 from infrastructure.authenticator.base import AuthenticatorBase
-from infrastructure.producers.base import ProducerBase
+from infrastructure.producers.common.base import ProducerBase
 
 from dishka.integrations.fastapi import FromDishka, DishkaRoute
 

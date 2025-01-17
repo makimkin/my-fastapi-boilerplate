@@ -6,9 +6,9 @@ import pytest
 
 from dishka import AsyncContainer, make_async_container
 
+from infrastructure.producers.common.base import ProducerBase
 from infrastructure.dispatchers.dispatcher import Dispatcher
 from infrastructure.containers.mock import ContainerMock
-from infrastructure.producers.base import ProducerBase
 
 from settings.config import Config
 
