@@ -38,9 +38,9 @@ allowed_origins = ["http://localhost:5173", "http://localhost:4173"]
 
 def create_app_base() -> FastAPI:
     app = FastAPI(
-        title="{{cookiecutter.app_name.upper()}}} API",
+        title="{{cookiecutter.app_name.upper()}} API",
         lifespan=LifespanManager,
-        description="API for {{cookiecutter.app_name}}} service",
+        description="API for {{cookiecutter.app_name}} service",
         version="0.1.0",
     )
 
