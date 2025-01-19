@@ -17,6 +17,7 @@ from infrastructure.dispatchers.base import (
     DispatcherQuery,
 )
 from .exceptions import (
+    DispatcherHandlerAlreadyRegistered,
     DispatcherNoCommandHandlerFound,
     DispatcherNoEventHandlerFound,
     DispatcherNoQueryHandlerFound,
@@ -35,23 +36,33 @@ class Dispatcher[C: CommandBase, CR: Any, Q: QueryBase, QR: Any, E: EventBase](
     # endregion---------------------------------------------------------------------
     # region COMMANDS
     # ------------------------------------------------------------------------------
-    def register_command(self, command: Type[C], handler: CommandHandlerBase[C, CR]):
+    def register_command(
+        self,
+        command: Type[C],
+        handler: CommandHandlerBase[C, CR],
+    ):
         logger.info(
             f"Registering command {command.__name__} "
             + "with handler {handler.__class__.__name__}",
         )
 
-        self.commands_map[command.__name__].append(handler)
+        if (h := self._commands_map.get(command.__name__, None)) is not None:
+            raise DispatcherHandlerAlreadyRegistered(
+                command.__name__,
+                h.__class__.__name__,
+            )
 
-    async def handle_command(self, command: C) -> list[CR]:
+        self._commands_map[command.__name__] = handler
+
+    async def handle_command(self, command: C) -> CR:
         logger.info(f"Handling command {command.__class__.__name__}")
 
-        handlers = self.commands_map.get(command.__class__.__name__, None)
+        handler = self._commands_map.get(command.__class__.__name__, None)
 
-        if handlers is None:
+        if handler is None:
             raise DispatcherNoCommandHandlerFound(command.__class__.__name__)
 
-        return [await handler.handle(command) for handler in handlers]
+        return await handler.handle(command)
 
     # endregion---------------------------------------------------------------------
     # region QUERY
@@ -62,12 +73,12 @@ class Dispatcher[C: CommandBase, CR: Any, Q: QueryBase, QR: Any, E: EventBase](
             + "with handler {handler.__class__.__name__}",
         )
 
-        self.queries_map[query.__name__] = handler
+        self._queries_map[query.__name__] = handler
 
     async def handle_query(self, query: Q) -> QR:
         logger.info(f"Handling query {query.__class__.__name__}")
 
-        handler = self.queries_map.get(query.__class__.__name__, None)
+        handler = self._queries_map.get(query.__class__.__name__, None)
 
         if handler is None:
             raise DispatcherNoQueryHandlerFound(query.__class__.__name__)
@@ -80,12 +91,12 @@ class Dispatcher[C: CommandBase, CR: Any, Q: QueryBase, QR: Any, E: EventBase](
     def register_event(self, event: type[E], handler: EventHandlerBase[E]):
         logger.info(f"Registering event {event.__name__}")
 
-        self.events_map[event.__name__].append(handler)
+        self._events_map[event.__name__].append(handler)
 
     async def handle_event(self, event: E) -> None:
         logger.info(f"Handling event {event.__class__.__name__}")
 
-        handlers = self.events_map.get(event.__class__.__name__, None)
+        handlers = self._events_map.get(event.__class__.__name__, None)
 
         if handlers is None:
             raise DispatcherNoEventHandlerFound(event.__class__.__name__)

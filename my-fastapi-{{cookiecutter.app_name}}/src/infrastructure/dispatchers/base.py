@@ -14,20 +14,18 @@ from domain.common.event import EventBase, EventHandlerBase
 
 @dataclass(eq=False, kw_only=True)
 class DispatcherCommand[C: CommandBase, R: Any](ABC):
-    commands_map: dict[str, list[CommandHandlerBase[C, R]]] = field(
-        default_factory=lambda: defaultdict(list)
-    )
+    _commands_map: dict[str, CommandHandlerBase[C, R]] = field(default_factory=dict)
 
     @abstractmethod
     def register_command(self, command: Type[C], handler: CommandHandlerBase[C, R]): ...
 
     @abstractmethod
-    async def handle_command(self, command: C) -> list[R]: ...
+    async def handle_command(self, command: C) -> R: ...
 
 
 @dataclass(eq=False, kw_only=True)
 class DispatcherQuery[Q: QueryBase, R: Any](ABC):
-    queries_map: dict[str, QueryHandlerBase[Q, R]] = field(default_factory=dict)
+    _queries_map: dict[str, QueryHandlerBase[Q, R]] = field(default_factory=dict)
 
     @abstractmethod
     def register_query(self, query: Type[Q], handler: QueryHandlerBase[Q, R]): ...
@@ -38,7 +36,7 @@ class DispatcherQuery[Q: QueryBase, R: Any](ABC):
 
 @dataclass(eq=False, kw_only=True)
 class DispatcherEvent[E: EventBase](ABC):
-    events_map: dict[str, list[EventHandlerBase[E]]] = field(
+    _events_map: dict[str, list[EventHandlerBase[E]]] = field(
         default_factory=lambda: defaultdict(list)
     )
 
