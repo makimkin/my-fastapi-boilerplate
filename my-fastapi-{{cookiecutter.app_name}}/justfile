@@ -1,9 +1,10 @@
 dc := "docker compose"
 
 file_app := "--file docker-compose.app.yaml"
-file_db := "--file docker-compose.postgres.yaml"
 file_cache := "--file docker-compose.redis.yaml"
 file_broker := "--file docker-compose.kafka.yaml"
+
+file_db := "--file docker-compose." + "${APP_DB:-mongo}" + ".yaml"
 
 container_cache := "cache"
 container_db_ui := "db-ui"
@@ -16,12 +17,8 @@ command := dc + " " + file_app + " " + file_db + " " + file_broker + " " + file_
 default:
   just --list
 
-install:
-    deactivate || true
-    rm -rf .venv
-    python3.13 -m venv .venv
-    . .venv/bin/activate
-    poetry install
+build +args="":
+  {{command}} build {{args}}
 
 up +args="":
   {{command}} up --build --remove-orphans {{args}}
@@ -44,11 +41,17 @@ app-restart +args="":
 app-logs +args="":
   {{command}} logs {{container_app}} {{args}}
 
+app-connect +args="":
+  {{command}} exec {{container_app}} bash
+
 app-migration-gen:
   {{command}} exec {{container_app}} alembic revision --autogenerate
 
 app-migration-up:
   {{command}} exec {{container_app}} alembic upgrade head
+
+app-migration-base:
+  {{command}} exec {{container_app}} alembic downgrade base
 
 db-ui-logs +args="":
   {{command}} logs {{container_db_ui}} {{args}}

@@ -12,7 +12,8 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - APP_ENV=development
+        - APP_ENV=${APP_ENV:-development}
+        - APP_DB=${APP_DB:-mongo}
     ports:
       - ${APP_PORT:-8000}:${APP_PORT:-8000}
     command: "python console.py run"
