@@ -2,15 +2,29 @@
 # region CONTAINER APP
 # ----------------------------------------------------------------------------------
 from .base import ContainerBase
-from .cache.redis import RedisCacheContainer
-from .repositories.sql import SQLRepositoriesContainer
+
+from settings.config import Config
+
+config = Config()
 
 
-class ContainerApp(
-    ContainerBase,
-    RedisCacheContainer,
-    SQLRepositoriesContainer,
-): ...
+match config.APP_DB:
+    case "mongo":
+        from .repositories.mongo import MongoRepositoriesContainer
+
+        ContainerApp = type(
+            "ContainerApp",
+            (ContainerBase, MongoRepositoriesContainer),
+            {},
+        )
+    case "postgres":
+        from .repositories.sql import SQLRepositoriesContainer
+
+        ContainerApp = type(
+            "ContainerApp",
+            (ContainerBase, SQLRepositoriesContainer),
+            {},
+        )
 
 
 # endregion-------------------------------------------------------------------------

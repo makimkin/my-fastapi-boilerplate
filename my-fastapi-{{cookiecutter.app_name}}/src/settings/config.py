@@ -1,7 +1,7 @@
 # endregion-------------------------------------------------------------------------
 # region CONFIG
 # ----------------------------------------------------------------------------------
-from typing import Annotated
+from typing import Annotated, Literal
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -15,6 +15,7 @@ class Config(BaseSettings):
     )
     # fmt: off
     APP_PORT: Annotated[int, Field(alias="APP_PORT")] = 8000
+    APP_DB: Annotated[Literal["mongo", "postgres"], Field(alias="APP_DB")] = "mongo"
 
     LOGGER_CONFIG_PATH: Annotated[str, Field(alias="LOGGER_CONFIG_PATH")] = "logger.yaml"
 
