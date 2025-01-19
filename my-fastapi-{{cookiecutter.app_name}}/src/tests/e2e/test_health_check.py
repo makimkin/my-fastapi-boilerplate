@@ -28,11 +28,21 @@ async def test_health_check_success(
 
     health_check_json, text = health_check_response.json(), health_check_response.text
     assert "authenticator" in health_check_json, text
+    assert "name" in health_check_json["authenticator"], text
+    assert "health" in health_check_json["authenticator"], text
+
     assert "connectionManager" in health_check_json, text
+    assert "name" in health_check_json["connectionManager"], text
+    assert "health" in health_check_json["connectionManager"], text
 
     health_check_data = BaseHealthCheckResponse(**health_check_json)
     assert health_check_data.authenticator is not None, text
+    assert health_check_data.authenticator.health == "✅", text
+    assert health_check_data.authenticator.name is not None, text
+
     assert health_check_data.connection_manager is not None, text
+    assert health_check_data.connection_manager.health == "✅", text
+    assert health_check_data.connection_manager.name is not None, text
     # fmt: on
 
 
